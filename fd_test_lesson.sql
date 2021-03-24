@@ -71,3 +71,41 @@ brand
 FROM phones
 GROUP BY brand
 HAVING sum(quantity)>77000;
+/* */
+SELECT id,
+char_length(concat("firstName", '', "lastName")) AS "l"
+FROM users
+ORDER BY l DESC
+limit 1;
+/* */
+SELECT
+char_length(concat("firstName", '', "lastName")) AS "Name length",
+count(*) AS "Amount"
+FROM users
+GROUP BY "Name length"
+HAVING char_length(concat("firstName", '', "lastName")) < 18;
+/* */
+SELECT "email", 
+char_length("email") AS "l"
+FROM users
+GROUP BY "email"
+HAVING "email" ILIKE 'm%' AND char_length("email") >= 25;
+/* */
+SELECT char_length("email") AS "length",
+count(*) 
+FROM users
+--WHERE "email" LIKE 'm%'
+GROUP BY "length"
+HAVING count(*) >= 10
+ORDER BY "length";
+/* */
+SELECT pto."phoneId", o.id, p.brand
+FROM phones_to_orders AS pto
+ JOIN orders AS o ON pto."orderId" = o.id
+ JOIN phones AS p ON pto."phoneId" = p.id
+WHERE o.id = 3;
+/* */
+SELECT count(pto.quantity),u.*, u.email  
+FROM phones_to_orders AS pto
+ JOIN users AS u ON pto."orderID" = u.id
+ GROUP BY pto.quantity;
