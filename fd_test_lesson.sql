@@ -164,8 +164,8 @@ WHERE uwo."sumOrders" > (
   );
   /* Создать таблицу tasks  */
   CREATE TABLE "tasks" (
-    id serial PRIMARY KEY,
-    userId REFERENCES users(id),
-    task varchar(250) NOT NULL CHECK (constrains != ''),
-    isDone boolean NOT NULL
+    "id" serial PRIMARY KEY,
+    "userId" int REFERENCES users(id),
+    "task" varchar(250) NOT NULL CHECK (task != ''),
+    "isDone" boolean NOT NULL
   );
