@@ -7,9 +7,9 @@ CREATE TABLE "customers"(
 /* */
 CREATE TABLE "orders"(
   id serial PRIMARY KEY,
-  customers_id REFERENCES customers(id) 
-  contracts_id REFERENCES contracts(id)
-  quantity int NOT NULL,
+  customers_id int REFERENCES customers(id), 
+  contracts_id int REFERENCES contracts(id),
+  PRIMARY KEY (order_id, product_id)
 );
 /* */
 CREATE TABLE "contracts"(
@@ -22,12 +22,15 @@ CREATE TABLE "contracts"(
 CREATE TABLE "products_to_orders"(
   order_id int REFERENCES "orders"(id),
   product_id int REFERENCES "users"(id),
+  quantity int NOT NULL,
   PRIMARY KEY (order_id, product_id)
 );
 /* */
 CREATE TABLE "shipment"(
   id serial PRIMARY KEY,
   created_at timestamp NOT NULL DEFAULT current_timestamp,
+  product_id int NOT NULL,
+  PRIMARY KEY (product_id)
 );
 /* */
 CREATE TABLE "products"(
@@ -35,11 +38,4 @@ CREATE TABLE "products"(
   name_product VARCHAR(64) NOT NULL,
   price decimal(10, 2) NOT NULL CHECK (price > 0)
 );
-/* */
-CREATE TABLE "shipment_to_orders_products"(
-  shipment_id, 
-  product_id,
-  order_id,
-  quantity CHECK,
-  fk() ref pto() primery key(shipment_id, product_id, order_id)
-)
+
